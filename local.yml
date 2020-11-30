@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  local:
+    container_name: local
+    build: .
+    tty: true
+    restart: "always"
+    command: /source/initialize_db.sh
+    ports:
+      - "7000:7000"
+    environment:
+      - PYTHONUNBUFFERED=0
+      - DEBUG=True
+      - DJANGO_SETTINGS_MODULE=config.settings.local
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=6000
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=localadm
+      - MYSQL_DATABASE=esms
+
+    networks:
+      - django
+
+networks:
+  django:
